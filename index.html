@@ -1,0 +1,226 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>voice assist</title>
+
+    <link rel="stylesheet" href="style.css">
+
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+    <section class="main">
+        <div class="image-container">
+            <div class="image">
+
+            </div>
+            
+            <p></p>
+        </div>
+        <div class="input">
+            
+    <div class="container">
+        <div class="center">
+            <h1>‎ ‎ ‎ ‎ ‎ Voice assist  </h1>
+            <button style="background-color:transparent;border:none;" class="talk"><img style="border-radius:20px;" src="./200w.webp" alt=""></button>
+            <h1 class="content"> Click here to speak</h1>
+        </div>
+      </div>
+          <h3> - Try saying 'open instagram'</h3>
+          <h3> - Try sayind 'relax mode' or 'binge mode'</h3>
+            
+        </div>
+    </section>
+
+    <!------- Js Linkage --------->
+    <script src="app.js" defer></script>
+</body>
+<script>
+    const btn = document.querySelector('.talk');
+const content = document.querySelector('.content');
+
+
+function speak(sentence) {
+    const text_speak = new SpeechSynthesisUtterance(sentence);
+
+    text_speak.rate = 1;
+    text_speak.pitch = 5;
+
+    window.speechSynthesis.speak(text_speak);
+}
+
+function wishMe() {
+    var day = new Date();
+    var hr = day.getHours();
+
+    if(hr >= 0 && hr < 12) {
+        speak("Good Morning  ");
+    }
+
+    else if(hr == 12) {
+        speak("Good latenoon  ");
+    }
+
+    else if(hr > 12 && hr <= 17) {
+        speak("Good Afternoon  ");
+    }
+
+    else {
+        speak("Good Evening");
+    }
+}
+
+window.addEventListener('load', ()=>{
+    speak("");
+    speak("");
+    wishMe();
+})
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+
+recognition.onresult = (event) => {
+    const current = event.resultIndex;
+    const transcript = event.results[current][0].transcript;
+    content.textContent = transcript;
+    speakThis(transcript.toLowerCase());
+}
+
+btn.addEventListener('click', ()=>{
+    recognition.start();
+})
+
+function speakThis(message) {
+    const speech = new SpeechSynthesisUtterance();
+
+    speech.text = "I did not understand what you said please try again";
+
+    if(message.includes('hey') || message.includes('hello')) {
+        const finalText = "hello ";
+        speech.text = finalText;
+    }
+
+    else if(message.includes('how are you')) {
+        const finalText = "I am fine   tell me how can i help you";
+        speech.text = finalText;
+    }
+
+    else if(message.includes('name')) {
+        const finalText = "My name is voice assist";
+        speech.text = finalText;
+    }
+
+    else if(message.includes('open google')) {
+        window.open("https://google.com", "_blank");
+        const finalText = "Opening Google";
+        speech.text = finalText;
+    }
+
+    else if(message.includes('open instagram')) {
+        window.open("https://instagram.com", "_blank");
+        const finalText = "Opening instagram";
+        speech.text = finalText;
+    }
+
+    else if(message.includes('what is') || message.includes('who is') || message.includes('what are')) {
+        window.open(`https://www.google.com/search?q=${message.replace(" ", "+")}`, "_blank");
+        const finalText = "This is what i found on internet regarding " + message;
+        speech.text = finalText;
+    }
+
+    else if(message.includes('wikipedia')) {
+        window.open(`https://en.wikipedia.org/wiki/${message.replace("wikipedia", "")}`, "_blank");
+        const finalText = "This is what i found on wikipedia regarding " + message;
+        speech.text = finalText;
+    }
+
+
+    else if(message.includes('time')) {
+        const time = new Date().toLocaleString(undefined, {hour: "numeric", minute: "numeric"})
+        const finalText = time;
+        speech.text = finalText;
+    }
+
+    else if(message.includes('date')) {
+        const date = new Date().toLocaleString(undefined, {month: "short", day: "numeric"})
+        const finalText = date;
+        speech.text = finalText;
+    }
+
+    else if(message.includes('calculator')) {
+        window.open('Calculator:///')
+        const finalText = "Opening Calculator";
+        speech.text = finalText;
+    }
+    else if(message.includes('open maps')||message.includes('navigate home')) {
+        window.open("https://playful-pastelito-5a19e6.netlify.app", "_blank");
+        const finalText = "Opening maps";
+        speech.text = finalText;
+    }
+    else if(message.includes('new note')||message.includes('notes')||message.includes('open notes')) {
+        window.open("https://aadya-sriram.github.io/fictional-octo-happiness-notes/", "_blank");
+        const finalText = "Opening notes";
+        speech.text = finalText;
+    }
+    else if(message.includes('open chat')||message.includes('chat')) {
+        window.open("https://12345678890.netlify.app", "_blank");
+        const finalText = "Opening chat";
+        speech.text = finalText;
+    }
+    else if(message.includes('plus')||message.includes('add')||message.includes('difference')||message.includes('subtract')||message.includes('multiply')||message.includes('divide')) {
+        window.open("https://aadya-sriram.github.io/calculator-realease-2/", "_blank");
+        const finalText = "Opening calculator";
+        speech.text = finalText;
+    }
+    else if(message.includes('weather')||message.includes('what is the weather')||message.includes('open weather')) {
+        window.open("https://aadya-sriram.github.io/weather/", "_blank");
+        const finalText = "Opening weather";
+        speech.text = finalText;
+    }
+    else if(message.includes('binge mode')||message.includes('relax mode')||message.includes('open movies')) {
+        window.open("https://aadya-sriram.github.io/urban-octo-parakeet/", "_blank");
+        const finalText = "Opening movies";
+        speech.text = finalText;
+    }
+    
+    else {
+        window.open(`https://www.google.com/search?q=${message.replace(" ", "+")}`, "_blank");
+        const finalText = "I found some information for " + message + " on google";
+        speech.text = finalText;
+    }
+
+    speech.volume = 1;
+    speech.pitch = 10;
+    speech.rate = 1;
+
+    window.speechSynthesis.speak(speech);
+
+}
+</script>
+<style>
+    *{
+        font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+</style>
+<style>
+    .container {
+      height: 60%;
+      position: relative;
+      
+    }
+    
+    .center {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    </style>
+    
+</html>
